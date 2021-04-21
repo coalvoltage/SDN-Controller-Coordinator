@@ -6,4 +6,4 @@ Instructions so far:
     wget https://github.com/panandr/mininet-fattree
 To start the topology, use the following:
 
-`<sudo python2  `which mn` --custom ~/mininet/custom/fattree.py --topo fattree,4 --mac --switch ovsk --controller remote,ip=<insert ip here>>`
+``sudo python2  `which mn` --custom ~/mininet/custom/fattree.py --topo fattree,4 --mac --switch ovsk --controller remote,ip=<insert ip here>``
