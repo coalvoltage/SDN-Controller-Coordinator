@@ -1,7 +1,7 @@
 # SDN-Controller-Coordinator
 Instructions so far:
 1. Install mininet vm according to the [mininet website](http://mininet.org/download/#option-1-mininet-vm-installation-easy-recommended)
-2. Replace the tutorial SDN controller (in a SSH window):
+2. Replace the tutorial SDN controller (in a SSH window) (This will be replaced once we move away from the tutorial version):
      1. cd ~/pox/pox/misc
      2. replace the file "of_tutorial.py" with this version
      3. cd ~/pox
