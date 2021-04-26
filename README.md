@@ -3,9 +3,9 @@ Instructions so far:
 1. Install mininet vm according to the [mininet website](http://mininet.org/download/#option-1-mininet-vm-installation-easy-recommended)
 
 2. Add the SDN script to a readable location
-     cd ~/pox/pox/misc
-     move the file "sdn_controller.py" here
-     cd ~/pox
+     1. cd ~/pox/pox/misc
+     2. move the file "sdn_controller.py" here
+     3. cd ~/pox
 
 3. Start the controller with the following:
 
