@@ -1,14 +1,18 @@
 # SDN-Controller-Coordinator
 Instructions so far:
 1. Install mininet vm according to the [mininet website](http://mininet.org/download/#option-1-mininet-vm-installation-easy-recommended)
-2. Replace the tutorial SDN controller (in a SSH window):
+2. Add the SDN script to a readable location
      cd ~/pox/pox/misc
-     replace the file "of_tutorial.py" with this version
+     move the file "sdn_controller.py" here
      cd ~/pox
 
 3. Start the controller with the following:
 
-``./pox.py log.level --DEBUG misc.of_tutorial``
+``sudo ~/pox/pox.py forwarding.l2_learning \
+  openflow.spanning_tree --no-flood --hold-down \
+  log.level --DEBUG samples.pretty_log \
+  openflow.discovery host_tracker \
+  info.packet_dump``
 
 4. Get the fattree topology using this (In the VM window):
     cd ~/mininet/custom
