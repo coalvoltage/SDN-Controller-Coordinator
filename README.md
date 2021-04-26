@@ -1,6 +1,7 @@
 # SDN-Controller-Coordinator
 Instructions so far:
 1. Install mininet vm according to the [mininet website](http://mininet.org/download/#option-1-mininet-vm-installation-easy-recommended)
+
 2. Add the SDN script to a readable location
      cd ~/pox/pox/misc
      move the file "sdn_controller.py" here
@@ -15,8 +16,8 @@ Instructions so far:
   info.packet_dump``
 
 4. Get the fattree topology using this (In the VM window):
-    cd ~/mininet/custom
-    wget https://github.com/panandr/mininet-fattree
+    1. cd ~/mininet/custom
+    2. wget https://github.com/panandr/mininet-fattree
 
 5. To start the topology, use the following:
 
