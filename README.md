@@ -9,7 +9,7 @@ Instructions so far:
 
 3. Start the controller with the following:
 
-``sudo ~/pox/pox.py forwarding.l2_learning \
+``sudo ~/pox/pox.py misc.sdn_controller \
   openflow.spanning_tree --no-flood --hold-down \
   log.level --DEBUG samples.pretty_log \
   openflow.discovery host_tracker \
@@ -22,3 +22,11 @@ Instructions so far:
 5. To start the topology, use the following:
 
 ``sudo python2  `which mn` --custom ~/mininet/custom/fattree.py --topo fattree,4 --mac --switch ovsk --controller remote,ip=<insert ip here>``
+
+NOTE: If SDN isn't working, use the premade component in POX if SDN is still being worked on with the following:
+``sudo ~/pox/pox.py forwarding.l2_learning \
+  openflow.spanning_tree --no-flood --hold-down \
+  log.level --DEBUG samples.pretty_log \
+  openflow.discovery host_tracker \
+  info.packet_dump``
+
