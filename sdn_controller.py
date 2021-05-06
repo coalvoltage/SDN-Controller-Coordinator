@@ -1,6 +1,11 @@
 from pox.core import core
 import pox.openflow.libopenflow_01 as of
-
+import pox.openflow.discovery as ds
+import time
+try:    
+    import thread 
+except ImportError:
+    import _thread as thread
 log = core.getLogger()
 
 class SDNControllerFat (object):
@@ -59,7 +64,11 @@ class SDNControllerFat (object):
     else:
       self.resend_packet(packet_in, of.OFPP_FLOOD)
       
-      
+def print_time(event):
+  log.debug(event.link.dpid1)
+  log.debug(event.link.port1)
+  log.debug(event.link.dpid2)
+  log.debug(event.link.port2)
 def launch ():
   """
   Starts the component
@@ -68,3 +77,5 @@ def launch ():
     log.debug("Controlling %s" % (event.connection,))
     SDNControllerFat(event.connection)
   core.openflow.addListenerByName("ConnectionUp", start_switch)
+  core.openflow_discovery.addListenerByName("LinkEvent", print_time)
+  #core.Discovery.addListenerByName("LinkEvent", print_time())
