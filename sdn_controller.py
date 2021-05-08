@@ -75,15 +75,10 @@ class SDNControllerFat (object):
         log.debug(sourceMessage)
         
         return
-<<<<<<< HEAD
       
       sourceMessage = "Source: " + str(packet.src) +  ", Dest: " + str(packet.dst) + ", Port:" + str(packet_in.in_port)
       log.debug(sourceMessage)
 
-=======
-      #sourceMessage = "Source: " + str(packet.src) +  ", Dest: " + str(packet.dst) + ", Port:" + str(packet_in.in_port)
-      #log.debug(sourceMessage)
->>>>>>> main
       msg = of.ofp_flow_mod()
       msg.match = of.ofp_match.from_packet(packet)
       msg.data = packet_in
