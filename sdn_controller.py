@@ -1,13 +1,17 @@
 from pox.core import core
 import pox.openflow.libopenflow_01 as of
-
+import pox.openflow.discovery as ds
+import time
+try:    
+    import thread 
+except ImportError:
+    import _thread as thread
 log = core.getLogger()
 
 class SDNControllerFat (object):
   def __init__ (self, connection):
     self.connection = connection
     connection.addListeners(self)
-
     self.mac_to_port = {}
 
 
@@ -25,14 +29,11 @@ class SDNControllerFat (object):
     """
     Handles packet in messages from the switch.
     """
-
     packet = event.parsed # This is the parsed packet data.
     if not packet.parsed:
       log.warning("Ignoring incomplete packet")
       return
-
     packet_in = event.ofp
-
     if str(packet.src) not in self.mac_to_port:
         self.mac_to_port[str(packet.src)] = packet_in.in_port
         
@@ -62,7 +63,6 @@ class SDNControllerFat (object):
         
     if str(packet.dst) in self.mac_to_port:
       out_port = self.mac_to_port[str(packet.dst)]
-      
       #drop packet if destination port = src port)
       if self.mac_to_port[str(packet.dst)] == event.port:
         msg = of.ofp_flow_mod()
@@ -75,10 +75,15 @@ class SDNControllerFat (object):
         log.debug(sourceMessage)
         
         return
+<<<<<<< HEAD
       
       sourceMessage = "Source: " + str(packet.src) +  ", Dest: " + str(packet.dst) + ", Port:" + str(packet_in.in_port)
       log.debug(sourceMessage)
 
+=======
+      #sourceMessage = "Source: " + str(packet.src) +  ", Dest: " + str(packet.dst) + ", Port:" + str(packet_in.in_port)
+      #log.debug(sourceMessage)
+>>>>>>> main
       msg = of.ofp_flow_mod()
       msg.match = of.ofp_match.from_packet(packet)
       msg.data = packet_in
@@ -90,11 +95,14 @@ class SDNControllerFat (object):
       msg.match.dl_dst = packet.dst
       msg.actions.append(of.ofp_action_output(port=out_port))
       self.connection.send(msg)
-
     else:
       self.resend_packet(packet_in, of.OFPP_FLOOD)
       
-      
+def print_time(event):
+  log.debug(event.link.dpid1)
+  log.debug(event.link.port1)
+  log.debug(event.link.dpid2)
+  log.debug(event.link.port2)
 def launch ():
   """
   Starts the component
@@ -103,3 +111,5 @@ def launch ():
     log.debug("Controlling %s" % (event.connection,))
     SDNControllerFat(event.connection)
   core.openflow.addListenerByName("ConnectionUp", start_switch)
+  core.openflow_discovery.addListenerByName("LinkEvent", print_time)
+  #core.Discovery.addListenerByName("LinkEvent", print_time())

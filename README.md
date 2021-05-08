@@ -9,11 +9,7 @@ Instructions so far:
 
 3. Start the controller with the following:
 
-``sudo ~/pox/pox.py misc.sdn_controller \
-  openflow.spanning_tree --no-flood --hold-down \
-  log.level --DEBUG samples.pretty_log \
-  openflow.discovery host_tracker \
-  info.packet_dump``
+``sudo ./pox.py   openflow.spanning_tree --no-flood --hold-down   log.level --DEBUG samples.pretty_log   openflow.discovery misc.sdn_controller host_tracker   info.packet_dump``
 
 4. Get the fattree topology using this (In the VM window):
     1. cd ~/mininet/custom
