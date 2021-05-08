@@ -35,7 +35,31 @@ class SDNControllerFat (object):
 
     if str(packet.src) not in self.mac_to_port:
         self.mac_to_port[str(packet.src)] = packet_in.in_port
-
+        
+    if event.port == 1:
+        msg = of.ofp_flow_mod()
+        msg.match = of.ofp_match.from_packet(packet)
+        msg.idle_timeout = 10
+        msg.hard_timeout = 10
+        msg.buffer_id = packet_in.buffer_id
+        self.connection.send(msg)
+        sourceMessage = "Drop port 1: Source: " + str(packet.src) +  ", Dest: " + str(packet.dst) + ", Port:" + str(packet_in.in_port)
+        log.debug(sourceMessage)
+        
+        return
+        
+    if str(event.parsed.dst) == "00:00:00:00:00:04" or str(event.parsed.src) == "00:00:00:00:00:04":
+        msg = of.ofp_flow_mod()
+        msg.match = of.ofp_match.from_packet(packet)
+        msg.idle_timeout = 10
+        msg.hard_timeout = 10
+        msg.buffer_id = packet_in.buffer_id
+        self.connection.send(msg)
+        sourceMessage = "Drop Mac: Source: " + str(packet.src) +  ", Dest: " + str(packet.dst) + ", Port:" + str(packet_in.in_port)
+        log.debug(sourceMessage)
+        
+        return
+        
     if str(packet.dst) in self.mac_to_port:
       out_port = self.mac_to_port[str(packet.dst)]
       
@@ -47,10 +71,13 @@ class SDNControllerFat (object):
         msg.hard_timeout = 10
         msg.buffer_id = packet_in.buffer_id
         self.connection.send(msg)
+        sourceMessage = "Drop: Source: " + str(packet.src) +  ", Dest: " + str(packet.dst) + ", Port:" + str(packet_in.in_port)
+        log.debug(sourceMessage)
+        
         return
       
-      #sourceMessage = "Source: " + str(packet.src) +  ", Dest: " + str(packet.dst) + ", Port:" + str(packet_in.in_port)
-      #log.debug(sourceMessage)
+      sourceMessage = "Source: " + str(packet.src) +  ", Dest: " + str(packet.dst) + ", Port:" + str(packet_in.in_port)
+      log.debug(sourceMessage)
 
       msg = of.ofp_flow_mod()
       msg.match = of.ofp_match.from_packet(packet)
