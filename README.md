@@ -13,8 +13,7 @@ Instructions so far:
 
 4. Get the fattree topology using this (In the VM window):
     1. cd ~/mininet/custom
-    2. wget https://github.com/panandr/mininet-fattree
-
+    2. wget https://raw.githubusercontent.com/panandr/mininet-fattree/master/fattree.py
 5. To start the topology, use the following:
 
 ``sudo python2  `which mn` --custom ~/mininet/custom/fattree.py --topo fattree,4 --mac --switch ovsk --controller remote,ip=<insert ip here>``
