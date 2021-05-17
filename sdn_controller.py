@@ -22,21 +22,23 @@ class Manager():
     
   def addSwitch(self, dpid):
     self.activeSwitches[dpid] = Node(dpid)
-    self.updateTopo(self.activeSwitches[dpid])
+    #self.updateTopo(self.activeSwitches[dpid])
     
   def addLink(self, dpid1, dpid2, port1, port2):
     self.activeSwitches[dpid1].links[dpid2] = (port2, True)
     self.activeSwitches[dpid2].links[dpid1] = (port1, True)
-    self.updateTopo(self.activeSwitches[dpid1])
+    #self.updateTopo(self.activeSwitches[dpid1])
     
   def removeLink(self, dpid1, dpid2):
-    self.activeSwitches[dpid1].links.pop(dpid2, None)
-    self.activeSwitches[dpid2].links.pop(dpid1, None)
+    if dpid1 in self.activeSwitches:
+        self.activeSwitches[dpid1].links.pop(dpid2, default = None)
+    if dpid2 in self.activeSwitches:
+        self.activeSwitches[dpid2].links.pop(dpid1, default = None)
     
-    if self.activeSwitches[dpid1]:
-      self.updateTopo(self.activeSwitches[dpid1])
-    else:
-      self.updateTopo(self.activeSwitches[dpid2])
+    #if self.activeSwitches[dpid1]:
+    #  self.updateTopo(self.activeSwitches[dpid1])
+    #else:
+    #  self.updateTopo(self.activeSwitches[dpid2])
     
   def enableLink(self, dpid1, dpid2):
     self.activeSwitches[dpid1].links[dpid2] = (self.activeSwitches[dpid1].links[dpid2][0], True)
@@ -80,12 +82,14 @@ class Manager():
       if previousKey[i] != None:
         self.enableLink(i, previousKey[i])
         
+    def printTree()
+        
         
         
 
 
 #global class
-#globalManager = Manager()
+globalManager = Manager()
 GLOBAL_SDN_CONTROLLER_LIST = []
 
 class SDNControllerFat (object):
@@ -183,6 +187,9 @@ class SDNControllerFat (object):
       self.connection.send(msg)
     else:
       self.resend_packet(packet_in, of.OFPP_FLOOD)
+      #for i in globalManager.activeSwitches[event.dpid].links:
+      #  if i[1] == True:
+      #      self.resend_packet(packet_in, i[0])
       
 def print_time(event):
   if event.removed:
@@ -191,10 +198,9 @@ def print_time(event):
     log.debug(event.link.port1)
     log.debug(event.link.dpid2)
     log.debug(event.link.port2)
-    #globalManager.removeLink(event.link.dpid1, event.link.dpid2, event.link.port1, event.link.port2)
+    globalManager.removeLink(event.link.dpid1, event.link.dpid2)
   else:
-    #globalManager.addLink(event.link.dpid1, event.link.dpid2)
-    pass
+    globalManager.addLink(event.link.dpid1, event.link.dpid2, event.link.port1, event.link.port2)
 
 def launch():
   """
@@ -202,7 +208,9 @@ def launch():
   """
   def start_switch (event):
     log.debug("Controlling %s" % (event.connection,))
+    globalManager.addSwitch(event.dpid)
     SDNControllerFat(event.connection)
   core.openflow.addListenerByName("ConnectionUp", start_switch)
   core.openflow_discovery.addListenerByName("LinkEvent", print_time)
+  
   #core.Discovery.addListenerByName("LinkEvent", print_time())
