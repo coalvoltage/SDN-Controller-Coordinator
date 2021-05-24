@@ -1,0 +1,31 @@
+py "Starting the script"
+h004 iperf -s &
+h002 iperf -c h004 -i 10
+py "Link between s3001 and s2001 down"
+link s3001 s2001 down
+h002 iperf -c h004 -i 10
+py "Link between s3001 and s2002 down"
+link s3001 s2001 up
+link s3001 s2002 down
+h002 iperf -c h004 -i 10
+py "Link fully restored"
+link s3001 s2002 up
+h002 iperf -c h004 -i 10
+
+
+py "Second Run: New failures"
+h004 iperf -s &
+h008 iperf -c h004 -i 10
+py "Link between s3004 and s2003 down"
+link s3004 s2003 down
+h008 iperf -c h004 -i 10
+py "Link between s3004 and s2004 down"
+link s3004 s2003 up
+link s3004 s2004 down
+h008 iperf -c h004 -i 10
+py "Link fully restored"
+link s3004 s2004 up
+h008 iperf -c h004 -i 10
+py "Link between s2004 and s1003 down"
+link s2004 s1003 down
+h008 iperf -c h004 -i 10
