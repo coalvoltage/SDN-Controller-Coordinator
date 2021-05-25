@@ -59,7 +59,7 @@ class SDNControllerFat (object):
       isFirstTime = True
         
     if str(packet.src) == "00:00:00:00:00:01":
-      log.debug("start")
+      log.debug("start: switch status")
       printList = []
       for i in core.openflow_discovery.adjacency:
         if ((core.openflow.getConnection(i.dpid1).ports[i.port1].config & of.OFPPC_NO_FLOOD) == 0) and ((core.openflow.getConnection(i.dpid2).ports[i.port2].config & of.OFPPC_NO_FLOOD) == 0) and (not ((i.dpid1, i.port1) in printList) and not ((i.dpid2, i.port2) in printList)) :
