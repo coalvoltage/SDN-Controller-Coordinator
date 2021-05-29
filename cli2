@@ -1,0 +1,22 @@
+py "Second Run: New failures"
+h004 iperf -s &
+h008 iperf -c h004 -i 20
+py "Link between s3004 and s2003 down"
+link s3004 s2003 down
+sh sleep .5
+h008 iperf -c h004 -i 20
+py "Link between s3004 and s2004 down"
+link s3004 s2003 up
+sh sleep .5
+link s3004 s2004 down
+sh sleep .5
+h008 iperf -c h004 -i 20
+py "Link fully restored"
+link s3004 s2004 up
+sh sleep .5
+h008 iperf -c h004 -i 20
+py "Link between s2004 and s1003 down"
+link s2004 s1003 down
+sh sleep .5
+h008 iperf -c h004 -i 20
+link s2004 s1003 up

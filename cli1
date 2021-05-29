@@ -1,0 +1,17 @@
+py "Starting the script"
+h004 iperf -s &
+h002 iperf -c h004 -i 20
+py "Link between s3001 and s2001 down"
+link s3001 s2001 down
+sh sleep .5
+h002 iperf -c h004 -i 20
+py "Link between s3001 and s2002 down"
+link s3001 s2001 up
+sh sleep .5
+link s3001 s2002 down
+sh sleep .5
+h002 iperf -c h004 -i 20
+py "Link fully restored"
+link s3001 s2002 up
+sh sleep .5
+h002 iperf -c h004 -i 20

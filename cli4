@@ -1,0 +1,23 @@
+py "Fourth Run: Multiple failures Part 2"
+py "Link between s3008 and s2008 down"
+h001 iperf -s &
+link s3008 s2008 down
+sh sleep .05
+h016 iperf -c h001 -i 20
+py "Link between s2007 and s1002 down"
+link s2007 s1002 down
+sh sleep .05
+h016 iperf -c h001 -i 20
+py "Link between s2007 and s1001 down"
+link s2007 s1002 up
+link s2007 s1001 down
+sh sleep .05
+h016 iperf -c h001 -i 20
+py "Link between s2001 and s1002 down"
+link s2001 s1002 down
+sh sleep .05
+h016 iperf -c h001 -i 20
+py "Link between s2003 and s1001 down"
+link s2003 s1001 down
+sh sleep .05
+h016 iperf -c h001 -i 20

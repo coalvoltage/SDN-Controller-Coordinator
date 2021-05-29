@@ -1,0 +1,9 @@
+py "Fifth: Multiple failures Part 3"
+py "link between s3001 and s2002 and s3002 and s2001 down"
+h001 iperf -s &
+link s3001 s2002 down
+link s3002 s2001 down
+link s2001 s1002 down
+link s2002 s1003 down
+sh sleep .05
+h016 iperf -c h001 -i 20

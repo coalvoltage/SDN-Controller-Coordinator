@@ -108,10 +108,7 @@ class SDNControllerFat (object):
 def print_time(event):
   if event.removed:
     log.debug("Link failure detected. Information below:")
-    log.debug(event.link.dpid1)
-    log.debug(event.link.port1)
-    log.debug(event.link.dpid2)
-    log.debug(event.link.port2)
+    log.debug("dpid1: " + str(event.link.dpid1) + ", port1: " + str(event.link.port1) + ", dpid2: " + str(event.link.dpid2) + ", port2: " + str(event.link.port2))
 
 def launch():
   """

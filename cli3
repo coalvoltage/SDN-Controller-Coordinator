@@ -1,0 +1,29 @@
+py "Third Run: Multiple failures"
+h016 iperf -s &
+h001 iperf -c h016 -i 20
+py "Link between s3001 and s2001 down"
+link s3001 s2001 down
+sh sleep .5
+h001 iperf -c h016 -i 20
+py "Link between s2002 and s1003 down"
+link s2002 s1003 down
+sh sleep .5
+h001 iperf -c h016 -i 20
+py "Link between s2002 and s1003 up"
+link s2002 s1003 up
+sh sleep .5
+h001 iperf -c h016 -i 20
+py "Link between s2002 and s1004 down"
+link s2002 s1004 down
+sh sleep .5
+h001 iperf -c h016 -i 20
+py "Path narrowed between 1003 and 2006 and 1003 and 2004"
+link s1003 s2008 down
+sh sleep .5
+h001 iperf -c h016 -i 20
+py "Path narrowed to 1003 and 2004"
+link s1003 s2006 down
+sh sleep .5
+h001 iperf -c h016 -i 20
+link s1003 s2006 up
+link s1003 s2006 down
