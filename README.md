@@ -1,5 +1,9 @@
 # SDN-Controller-Coordinator
-Instructions so far:
+
+This project is the Jeffery Lai's and Jimmy Im's senior design for CS197I. The goal of this project is to research and create a SDN controller to mitigate failures. This is done using the POX library.
+
+
+Instructions
 1. Install mininet vm according to the [mininet website](http://mininet.org/download/#option-1-mininet-vm-installation-easy-recommended)
 
 2. Add the SDN script to a readable location
